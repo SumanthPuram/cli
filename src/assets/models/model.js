@@ -2,9 +2,13 @@
 
 module.exports = (sequelize, DataTypes) => {
   var <%= name %> = sequelize.define('<%= name %>', {
-    <% attributes.forEach(function(attribute, index) { %>
-      <%= attribute.fieldName %>: DataTypes.<%= attribute.dataFunction ? `${attribute.dataFunction.toUpperCase()}(DataTypes.${attribute.dataType.toUpperCase()})` : attribute.dataType.toUpperCase() %>
-      <%= (Object.keys(attributes).length - 1) > index ? ',' : '' %>
+    <% attributes.forEach(function(attribute) { %>
+    <%= attribute.fieldName %>: {
+        type: DataTypes.<%= attribute.dataFunction ? `${attribute.dataFunction.toUpperCase()}(DataTypes.${attribute.dataType.toUpperCase()})` : attribute.dataType.toUpperCase()%>,
+      <% Object.keys(attribute.customAttributes).forEach(function(key) { %>
+        <%= key %>: <%= attribute.customAttributes[key] %>,
+        <% }) %>
+      },
     <% }) %>
   }, {
     <%= underscored ? 'underscored: true,' : '' %>
