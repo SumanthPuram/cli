@@ -1,7 +1,6 @@
-'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  var <%= name %> = sequelize.define('<%= name %>', {
+  const <%= name %> = sequelize.define('<%= name %>', {
     <% attributes.forEach(function(attribute) { %>
     <%= attribute.fieldName %>: {
         type: DataTypes.<%= attribute.dataFunction ? `${attribute.dataFunction.toUpperCase()}(DataTypes.${attribute.dataType.toUpperCase()})` : attribute.dataType.toUpperCase()%>,
@@ -14,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     <%= underscored ? 'underscored: true,' : '' %>
   });
 
-  <%= name %>.associate = function(models) {
+  <%= name %>.associate = (models) => {
     // associations can be defined here
   };
 
